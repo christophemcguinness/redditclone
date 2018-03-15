@@ -1,0 +1,46 @@
+{% extends 'base.html'%}
+
+{% block content%}
+<h1>The Front Page Of Nowhere!!</h1>
+<br/>
+<a class="btn btn-primary" href="{% url 'posts:create'%}">New Post</a>
+<br/>
+<br/>
+
+{% for post in posts.all %}
+
+<table>
+    <tr>
+        <td style="padding-right: 10px;">
+            <a href="#" onclick="document.getElementById('up{{post.id}}').submit()">
+                <span class="fas fa-arrow-up" aria-hidden="true"></span>
+            </a>
+            <form method="POST" id="up{{post.id}}" action="{% url 'posts:upvote' post.id %}">
+                {% csrf_token %}
+                <input type="hidden">
+            </form>
+            {{post.votes_total}}
+           <br/>
+            <a href="#" onclick="document.getElementById('down{{post.id}}').submit()">
+                <span class="fas fa-arrow-down" aria-hidden="true"></span>
+            </a>
+             <form method="POST" id="down{{post.id}}" action="{% url 'posts:downvote' post.id %}">
+                {% csrf_token %}
+                <input type="hidden">
+            </form>
+        </td>
+
+        <td>
+            <a href="{{post.url}}">{{post.title}}</a>
+            <br/>
+            {{post.pub_date_pretty}} by {{post.author.username}}
+        </td>
+    </tr>
+</table>
+
+<br/>
+<br/>
+
+{% endfor %}
+
+{% endblock%}

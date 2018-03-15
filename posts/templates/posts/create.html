@@ -1,0 +1,35 @@
+{% extends 'base.html'%}
+
+{% block content%}
+<h1>Create a Post</h1>
+
+{% if error %}
+<p style="color:red;">{{error}} </p>
+{% endif %}
+
+{% if success %}
+<p style="color:green;">{{success}} </p>
+{% endif %}
+
+
+<form method="POST" action="{% url 'posts:create' %}">
+    {% csrf_token %}
+
+    <!--{% if request.GET.next %}-->
+    <!--<input type="hidden" name="next" value="{{ request.GET.next }}"/>-->
+    <!--{% endif %}-->
+
+    Title:
+    <br/>
+    <input type="text" name="title">
+    <br/>
+    URL:
+    <br/> <input type="text" name="urllink">
+    <br/>
+
+    <br/>
+    <input type="submit" class="btn btn-primary" name="postComment" value="Post">
+</form>
+
+
+{% endblock%}
